@@ -1,20 +1,22 @@
-// src/declarations/my-canister/my_canister.did.js
 export const idlFactory = ({ IDL }) => {
   return IDL.Service({
-    greet: IDL.Func([], [IDL.Text], []),
-    saveReservation: IDL.Func(
-      [
-        IDL.Record({
-          name: IDL.Text,
-          phoneNumber: IDL.Text,
-          serviceType: IDL.Text,
-          dateTime: IDL.Text,
-          branch: IDL.Text
-        })
-      ],
-      [],
+    add_booking: IDL.Func(
+      [IDL.Record({
+        status: IDL.Text,
+        stylist_id: IDL.Opt(IDL.Nat64),
+        appointment: IDL.Text,
+        service_type: IDL.Text,
+        duration_minutes: IDL.Nat32,
+        name: IDL.Text,
+        price_cents: IDL.Nat32,
+        customer_id: IDL.Nat64,
+        age_group: IDL.Text,
+      })],
+      [IDL.Text],
       []
     ),
-    getBranches: IDL.Func([], [IDL.Vec(IDL.Text)], ['query'])
+    recommend_for_customer: IDL.Func([IDL.Nat64], [IDL.Text], []),
+
+    // … other methods
   });
 };
