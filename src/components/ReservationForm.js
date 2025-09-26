@@ -44,19 +44,23 @@ const ReservationForm = () => {
             botReply = "When would you like to come? (Select date and time)";
         } else if (!reservationData.dateTime) {
             setReservationData(prev => ({ ...prev, dateTime: userInput }));
-            botReply = "Which branch do you prefer?";
+            botReply = "Which branch do you prefer? ";
         } else if (!reservationData.branch) {
             const selectedBranch = branches.find(b => b.branchName.toLowerCase() === userInput.toLowerCase())?.branchName || branches[0]?.branchName;
             setReservationData(prev => ({ ...prev, branch: selectedBranch }));
 
             try {
                 // Panggil method canister (misal saveReservation)
-                await myCanisterActor.saveReservation({
-                    name: reservationData.name,
-                    phoneNumber: reservationData.phoneNumber,
-                    serviceType: reservationData.serviceType,
-                    dateTime: reservationData.dateTime,
-                    branch: selectedBranch
+                await myCanisterActor.add_booking({
+                status: "confirmed",
+                stylist_id: [],
+                appointment: reservationData.dateTime,
+                service_type: reservationData.serviceType,
+                duration_minutes: 60,
+                name: reservationData.name,
+                price_cents: 5000,
+                customer_id: window.BigInt(Date.now()),
+                age_group: "adult",
                 });
 
                 botReply = `✅ All set! Your appointment for ${reservationData.serviceType} at ${selectedBranch} on ${reservationData.dateTime} is booked. Thank you, ${reservationData.name}!`;
