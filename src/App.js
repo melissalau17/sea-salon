@@ -13,12 +13,14 @@ import Testimonials from "./components/Testimonials";
 import Team from "./components/Team";
 import Footer from "./components/Footer";
 import ReservationForm from "./components/ReservationForm";
+import ChatbotEmbed from "./components/homepage/ChatbotEmbed";
 
 const Layout = () => (
   <>
     <Navbar />
-    <Outlet /> {/* Renders child route content */}
+    <Outlet /> 
     <Footer />
+    <ChatbotEmbed />
   </>
 );
 
